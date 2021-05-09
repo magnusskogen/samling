@@ -1,0 +1,71 @@
+
+<div class="container pt-8 pb-8">
+
+    <div class="grid grid-cols-12">
+  
+      <div class="col-span-12 lg:col-span-4 border-t pt-4 lg:pt-8 mob:pb-16">
+        <div class="text-base mb-4">
+          <p>Vi kutter opp bestillinger hver fredag morgen, og de kan deretter hentes i butikkene hos Bakklandet Blomster (dette kan du velge når du betaler).</p>
+          <p>Vi leverer også på døren i Trondheim hver fredag og lørdag. Du kan skrive hvilken dag du vil ha de levert i utsjekken. For resten av landet sender vi ut varer med post hver mandag.</p>
+          <p>Priser for levering (gjelder både post og levering på dør):</p>
+        </div>
+        <table class="table text-sm mt-8 w-full">
+          <tr>
+            <td class="pb-2 border-b">Ordrebeløp</td>
+            <td class="pl-4 text-right pb-2 border-b">Fraktkostnad</td>
+          </tr>
+          <tr>
+            <td class="pt-2">0-500,-</td>
+            <td class="pt-2 pl-4 text-right pb-2">120,-</td>
+          </tr>
+          <tr>
+            <td>500-1400,-</td>
+            <td class="pl-4 text-right pb-2">59,-</td>
+          </tr>
+          <tr>
+            <td class="border-b pb-2">1400,- og over</td>
+            <td class="pl-4 text-right pb-4 border-b pb-4">Gratis</td>
+          </tr>
+        </table>
+        <div class="text-sm leading-normal mt-8">Bestillinger kan også hentes kostnadsfritt hos Bakklandet Blomster.</div>
+
+      </div>
+      <div class="col-span-12 lg:col-span-4 border-t pt-4 lg:pt-8">
+          <div class="text-base">
+        {% form 'customer' %}
+          {% if form.posted_successfully? %}
+            <p>Takk! Vi ser frem til å holde deg oppdatert. Snakkes snart!</p>
+        {% else %}
+  
+  
+          <div>
+            <p>Samlingen er en klubb for de interesserte, nysgjerrige og dedikerte. Som medlem i Samlingen får du uregelmessige nyhetsbrev og invitasjoner til arrangement. Meld deg inn her!</p>
+          </div>
+  
+          <div class="border-b flex justify-between  pb-2 mb-4 pt-8">
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input type="email" class="bg-transparent" name="contact[email]" class="flex-1" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="Din epostadresse" autocorrect="off" autocapitalize="off">
+              <button type="submit" class="" name="commit" class="text-right">
+                Send
+              </button>
+          </div>
+  
+                  {{ form.errors | default_errors }}
+        {% endif %}
+  
+        {% endform %}
+        </div>
+      </div>
+      <div class="col-span-12 lg:col-span-4 lg:border-t lg:pt-8">
+        <div class="text-base mb-4">
+          <p>Følg oss på <a href="https://instagram.com/samling.store" class="underline">Instagram</a> og <a href="https://facebook.com/samling.store" class="underline">Facebook</a> også kanskje?</p>
+        </div>
+        <p><a href="https://samling.store/pages/salgsvilkar">Her er forresten <u>salgsvilkårene</u> våre.</a></p>
+      </div>
+  
+      
+   
+  </div>
+  
+  
+  

@@ -1,0 +1,34 @@
+
+
+<div class="container w-2/3 lg:w-3/5">
+  <div class="text-md"><a href="/">Samling</a></div>  
+</div>
+
+<div class="container mt-40 ">
+  <div class="grid grid-cols-12 mb-8 lg:mb-32">
+	<div class="col-span-12 lg:col-span-9">
+      <div class="text-xl mb-8">Gavekort</div>
+      <div class="text-base mb-8 lg:w-1/2">
+          Her er ditt gavekort, som du kan bruke på https://samling.store. {{ 'gift_cards.issued.redeem_html' | t: value: formatted_initial_value_stripped }}:
+      </div>
+      
+      <div class="text-md mb-8"><span class="border-b inline-block">{{ gift_card.code | format_code }}</span></div>
+      
+      <div class="flex mb-4 items-end">
+	      <div class="text-caps w-64">Opprinnelig beløp:</div>
+          <div class="text-base">{{ gift_card.initial_value | money }}</div>
+      </div>
+      <div class="flex items-end">
+	      <div class="text-caps w-64">Gejnstående beløp:</div>
+          <div class="text-base">{{ gift_card.balance | money }}</div>
+      </div>
+      
+
+   	</div>
+
+      
+      
+  </div>
+
+</div>
+

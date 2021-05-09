@@ -1,0 +1,20 @@
+<div class="container w-2/3 lg:w-3/5">
+  <div class="text-md"><a href="/">Samling</a> 
+  <br>Delikatesse</div>  
+</div>
+
+<div class="container mt-40 ">
+  <div class="grid grid-cols-12 mb-8 lg:mb-32">
+    <div class="col-span-12 lg:col-span-8">
+      <div class="text-xl mb-8">
+        <h1>{{ page.title }}</h1>
+      </div>
+
+      <div class="text-base">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include 'footer' %}

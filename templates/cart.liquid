@@ -1,0 +1,85 @@
+{% assign invert = 'invert' %}
+{% assign subtitle = 'Handlekurv' %}
+
+<div class="container w-2/3 lg:w-3/5">
+  <div class="text-md"><a href="/">Samling</a> 
+  <br>Handlekurv</div>  
+</div>
+
+<div class="container mt">
+  <form action="/cart" method="post" novalidate class="grid grid-cols-12 mb-40">
+
+    <div class="col-span-12 lg:col-span-7 grid grid-cols-12 pt-40 lg:pr-20">
+      {% for item in cart.items %}
+      
+      {% for tag in item.tags %}
+          {% if tag contains 'NO' %}{% assign no = tag | replace: 'NO-', '' %}{% endif %}
+        {% endfor %}
+        {% assign productPrice = item.price | money %}
+        <div href="{{ item.url }}" class="col-span-6 lg:col-span-4 mb-8 lg:mb-16">
+          <img width="{{ item.image.width }}"
+          height="{{ item.image.height }}"
+          srcset="{{ item.image | img_url: '360x' }} 360w,
+          {{ item.image | img_url: '768x' }} 768w,
+          {{ item.image | img_url: '980x' }} 980w,
+          {{ item.image | img_url: '1080x' }} 1080w" class="mb-4">
+          <div class="flex justify-between mb-4">
+            <div class="flex items-center">
+              {% if no %}<div class="no mr-3">{{ no }}</div>{% endif %}
+              <div class="text-base">{{ item.title }}</div>
+            </div>
+            <div class="flex items-baseline">
+                <div class="text-base">{{ productPrice }}</div>
+            </div>
+          </div>
+          <div class="flex* justify-between">
+            <div class="flex items-center mb-4">
+              <div class="text-caps mr-4 w-20">Antall</div>
+              <input
+                type="text"
+                name="updates[]"
+                size="4"
+                id="updates_{{ item.id }}"
+                value="{{ item.quantity }}"
+                class="bg-transparent border p-1 w-8 text-center"
+              />
+            </div>
+            <div class="flex mb-2">
+              <div class="text-caps mr-4 w-20">Total</div>
+              {{ item.price | money }} <br />
+            </div>
+          </div>
+          
+        </div>
+         
+    
+      {% endfor %}
+
+
+    </div>
+
+    <div class="col-span-12 lg:col-span-4">
+      <div class="sticky text-black bg-white p-8 py-16 pb-8 bg-jagged ">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-caps">Total</div>
+          <div class="text-base">{{ cart.total_price | money }}</div>
+        </div>
+        <div class="flex justify-between items-center mb-16">
+          <div class="text-caps">Frakt*</div>
+          <div>
+            <div class="text-base">{% if cart.total_price > 140000 %}Gratis{% elsif cart.total_price > 49999 %}59,-{% else %}120,-{% endif %}</div>              
+            </div>
+        </div>
+        <div class="mb-16">
+          <textarea name="note" class="text-base w-full" placeholder="Beskjed til bestillingen (feks ønsket leveringstidspunkt)"></textarea>
+        </div>
+        <div class="justify-center flex">
+          <button class="button mr-4">Oppdatér handlekurv</button>
+          <button type="submit" name="checkout" class="button no-barba">Gå til betaling</button>
+        </div>
+        <div class="text-sm opacity-50 leading-normal mt-16">* Bestillingen kan også hentes kostnadsfritt hos Bakklandet Blomster. Dette kan du velge i neste steg!</div>
+
+      </div>
+    </div>
+  </form>
+</div>

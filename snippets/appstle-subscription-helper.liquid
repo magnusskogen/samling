@@ -1,0 +1,100 @@
+{% comment %}
+Don't edit this file.
+This snippet is auto generated and will be overwritten.
+{% endcomment %}
+
+
+<script id="subscription-helper">
+    var _RSConfig = _RSConfig || {};
+
+    _RSConfig = {
+        "selectors": {
+            "payment_button_selectors": "form[action$='/cart/add'] .shopify-payment-button",
+            "atcButtonSelector": ".btn.product-form__cart-submit",
+            "subscriptionLinkSelector": "div.grid.myaccount",
+            "atcButtonPlacement": "BEFORE",
+            "subscriptionLinkPlacement": "BEFORE",
+        },
+        "moneyFormat": "{% raw %}{{amount_no_decimals}},-{% endraw %}",
+        "oneTimePurchaseText": "One Time Purchase",
+        "shop": "samling-store.myshopify.com",
+        "deliveryText": "delivery",
+        "purchaseOptionsText": "Purchase Options",
+        "manageSubscriptionButtonText": "Manage Subscription",
+        "subscriptionOptionText": "Subscribe and save",
+        "sellingPlanSelectTitle": "DELIVERY FREQUENCY",
+        "tooltipTitle": "Subscription detail",
+        "tooltipDesctiption": "<strong>Have complete control of your subscriptions<\/strong><br\/><br\/>Skip, reschedule, edit, cancel deliveries anytime matching your needs.",
+        "orderStatusManageSubscriptionTitle": "Subscription",
+        "orderStatusManageSubscriptionDescription": "Continue to your account to view and manage your subscriptions.",
+        "orderStatusManageSubscriptionButtonText": "Manage your subscription",
+        "priceSelector": ".price__regular .price-item.price-item--regular",
+        "badgeTop": "",
+        "pricePlacement":"BEFORE",
+        "css": {
+            "appstle_subscription_widget": {
+                "margin-top": "" ,
+                "margin-bottom": "",
+            },
+
+            "appstle_subscription_wrapper": {
+                "border-width": "",
+                "border-color": "",
+            },
+
+            "appstle_circle": {
+                "border-color": "",
+            },
+
+            "appstle_dot": {
+                "background-color": "",
+            },
+
+            "appstle_select": {
+                "padding-top": "",
+                "padding-bottom": "",
+                "padding-left": "",
+                "padding-right": "",
+                "border-width": "",
+                "border-style": "",
+                "border-color": "",
+                "border-radius": "",
+            },
+
+            "tooltip_subscription_svg": {
+                "fill": "",
+            },
+
+            "appstle_tooltip": {
+                "color": "",
+                "background-color": "",
+            },
+
+            "appstle_tooltip_border_top_color": {
+                "border-top-color": "",
+            },
+
+            "appstle_subscription_final_price": {
+                "color": "",
+            },
+            "appstle_widget_text_color": {
+                "color": "",
+            },
+            "customCSS": "",
+        }
+    };
+
+
+    _RSConfig.shop = '{{shop.permanent_domain}}';
+
+
+    {% if product %}
+    _RSConfig.product = {{ product | json }};
+    _RSConfig.product.collections = {{ product.collections | json }};
+
+    {% for variant in product.variants %}
+    _RSConfig.product.variants[{{forloop.index | minus: 1 }}]['inventory_quantity'] = {{ variant.inventory_quantity }};
+    {% endfor %}
+    {% endif %}
+
+</script>

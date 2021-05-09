@@ -1,0 +1,10 @@
+<a href="{{ product.url }}" class="gsp-6 lg:gsp-4 no-underline">
+  <div class="product-image-hover">
+    {% for image in product.images limit: 2 %}
+    <img src="{{ image | img_url: '800x1200', crop: 'center' }}" />{% endfor %}
+  </div>
+  <div class="flex justify-between mt-2 lg:mt-4 text-sm">
+    <div>{{ product.title }}</div>
+    <div>{{ product.price | money }}</div>
+  </div>
+</a>

@@ -1,0 +1,200 @@
+{% if product and product.selling_plan_groups.size > 0 %}
+  {% if shop.metafields.nativeSubscription.thsb_subscription_layout == 1 %}
+    <div class="th_subscription_radio_section">
+      <input type="hidden" name="selling_plan" class="th_subscription_selling_id_{{ product.id }}" value="{{ product.selected_selling_plan.id }}" />
+      {% if shop.metafields.nativeSubscription.thsb_purchase_option  != blank %}
+        <legend class="th_sp_wf_cls th_subscription_section_title">{{ shop.metafields.nativeSubscription.thsb_purchase_option }}</legend>
+      {% else %}
+        <legend class="th_sp_wf_cls th_subscription_section_title" data-language="th_sb_purchase_option">Purchase options</legend>
+      {% endif %}
+      <div class="th_sp_wf_cls th_subscription_radio_section_outer">
+        <div class="th_subscription_radio_plans">
+          {% unless product.requires_selling_plan %}
+            <div class="th_sp_wf_cls th_subscription_radio_fieldset">
+              <div class="th_subscription_radio_label_outer">
+                <input type="radio" id="th_subscription_radio_otp_option_{{ product.id }}" name="th-subscription-plan-selector-group-radio" value="one-time-purchase" {% unless product.requires_selling_plan %}checked{% endunless %} />
+                {% if shop.metafields.nativeSubscription.thsb_one_time_purchase  != blank %}
+                  <label for="th_subscription_radio_otp_option_{{ product.id }}" data-value="one-time-purchase-label">{{ shop.metafields.nativeSubscription.thsb_one_time_purchase }}</label>
+                {% else %}
+                  <label for="th_subscription_radio_otp_option_{{ product.id }}" data-value="one-time-purchase-label">One-time purchase</label>
+                {% endif %}
+              </div>
+            </div>
+          {% endunless %}
+          {% for th_subscription_spg in product.selling_plan_groups %}
+            {% if th_subscription_spg.app_id == '18d463fb7da4ca64c4511f4aa069dc20' %}
+              <div class="th_sp_wf_cls th_subscription_radio_fieldset">
+                <div class="th_subscription_radio_label_outer">
+                  <input type="radio" id="th_subscription_radio_{{ th_subscription_spg.id }}_option_{{ product.id }}" class="th_subscription_radio_btn_cls_group" name="th-subscription-plan-selector-group-radio" value="{{ th_subscription_spg.id }}" {% if product.requires_selling_plan %}{% if forloop.first %}checked{% endif %}{% endif %} />
+                  <label for="th_subscription_radio_{{ th_subscription_spg.id }}_option_{{ product.id }}">{{ th_subscription_spg.name }}</label>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% for th_subscription_spg in product.selling_plan_groups %}
+          {% if th_subscription_spg.app_id == '18d463fb7da4ca64c4511f4aa069dc20' %}
+            <div class="th_subscription_radio_interval" data-id="th_subscription_radio_{{ th_subscription_spg.id }}_option_{{ product.id }}" {% unless product.requires_selling_plan %}style="display:none;"{% endunless %}>
+              <div class="th_subscription_radio_spg_plan_label">
+                <span class="th_subscription_radio_spg_plan_label_title">{{ th_subscription_spg.options[0].name }}</span>
+              </div>
+              {% for th_subscription_plan in th_subscription_spg.selling_plans %}
+                <div class="th_subscription_radio_spg_plan_detail">
+                  <input type="radio" id="th_subscription_radio_spg_plan_{{ th_subscription_plan.id }}_{{ product.id }}" class="th_subscription_radio_btn_cls" name="th_subscription_radio_plan_{{ th_subscription_spg.id }}_{{ product.id }}" value="{{ th_subscription_plan.id }}" data-dicounttype="{{ th_subscription_plan.price_adjustments[0].value_type }}" data-dicountvalue="{{ th_subscription_plan.price_adjustments[0].value }}" />
+                  <label for="th_subscription_radio_spg_plan_{{ th_subscription_plan.id }}_{{ product.id }}" class="th_subscription_radio_spg_plan_inner_label">
+                    <span class="th_subscription_radio_spg_plan_svg">
+                      <svg class="th_subscription_radio_non_checked" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" width="50" height="50" xml:space="preserve">
+                        <path d="M256,0C115.03,0,0,115.05,0,256c0,140.97,115.05,256,256,256c140.97,0,256-115.05,256-256C512,115.03,396.95,0,256,0z     M256,482C131.383,482,30,380.617,30,256S131.383,30,256,30s226,101.383,226,226S380.617,482,256,482z"/>
+                      </svg>
+                      <svg class="th_subscription_radio_checked" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" width="50" height="50" xml:space="preserve">
+                        <path d="M437.019,74.98C388.667,26.629,324.38,0,256,0C187.619,0,123.331,26.629,74.98,74.98C26.628,123.332,0,187.62,0,256    s26.628,132.667,74.98,181.019C123.332,485.371,187.619,512,256,512c68.38,0,132.667-26.629,181.019-74.981    C485.371,388.667,512,324.38,512,256S485.371,123.333,437.019,74.98z M256,482C131.383,482,30,380.617,30,256S131.383,30,256,30    s226,101.383,226,226S380.617,482,256,482z"/>
+                        <path d="M378.305,173.859c-5.857-5.856-15.355-5.856-21.212,0.001L224.634,306.319l-69.727-69.727    c-5.857-5.857-15.355-5.857-21.213,0c-5.858,5.857-5.858,15.355,0,21.213l80.333,80.333c2.929,2.929,6.768,4.393,10.606,4.393    c3.838,0,7.678-1.465,10.606-4.393l143.066-143.066C384.163,189.215,384.163,179.717,378.305,173.859z"/>
+                      </svg>
+                    </span>
+                    <span class="th_subscription_radio_spg_plan_title">{{ th_subscription_plan.options[0].value }}</span>
+                    <span class="th_subscription_radio_spg_plan_price_delivery">
+                      {% if th_subscription_plan.price_adjustments[0].value != blank %}
+                        {% if th_subscription_plan.price_adjustments[0].value_type == 'percentage' %}
+                          {% assign thsb_remaining_percentage = 100 | minus: th_subscription_plan.price_adjustments[0].value %}
+                          {% assign thsb_discounted_price = product.selected_or_first_available_variant.price | times: thsb_remaining_percentage | divided_by: 100 %}
+                          <em class="th_subscription_radio_spg_plan_price">
+                            <span class="money">{{ thsb_discounted_price | money }}</span>
+                      	  </em>
+                        {% else %}
+                          {% assign thsb_discounted_price = product.selected_or_first_available_variant.price | minus: th_subscription_plan.price_adjustments[0].value %}
+                          <em class="th_subscription_radio_spg_plan_price">
+                            <span class="money">{{ thsb_discounted_price | money }}</span>
+                          </em>
+                        {% endif %}
+                      {% else %}
+                        <em class="th_subscription_radio_spg_plan_price">
+                          <span class="money">{{ product.selected_or_first_available_variant.price | money }}</span>
+                      	</em>
+                      {% endif %}
+                      <em class="th_subscription_radio_spg_plan_separate"> / </em>
+                      {% if shop.metafields.nativeSubscription.thsb_delivery  != blank %}
+                        <em class="th_subscription_radio_spg_plan_delivery">{{ shop.metafields.nativeSubscription.thsb_delivery }}</em>
+                      {% else %}
+                        <em class="th_subscription_radio_spg_plan_delivery">Delivery</em>
+                      {% endif %}
+                    </span>
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% else%}
+    <div class="th_subscription_section">
+      <input type="hidden" name="selling_plan" class="th_subscription_selling_id_{{ product.id }}" value="{{ product.selected_selling_plan.id }}" />
+      {% if shop.metafields.nativeSubscription.thsb_purchase_option  != blank %}
+        <legend class="th_sp_wf_cls th_subscription_section_title">{{ shop.metafields.nativeSubscription.thsb_purchase_option }}</legend>
+      {% else %}
+        <legend class="th_sp_wf_cls th_subscription_section_title">Purchase options</legend>
+      {% endif %}
+      <div class="th_sp_wf_cls th_subscription_section_outer">
+        {% unless product.requires_selling_plan %}
+          <div class="th_sp_wf_cls th_subscription_fieldset">
+            <label class="th_subscription_group_label">
+              <input type="radio" class="th_subscription_fieldset_radio" name="th-subscription-plan-selector-group" value="" checked />
+              {% if shop.metafields.nativeSubscription.thsb_one_time_purchase  != blank %}
+                <span class="th_subscription_fieldset_name" data-value="one-time-purchase-label">{{ shop.metafields.nativeSubscription.thsb_one_time_purchase }}</span>
+              {% else %}
+                <span class="th_subscription_fieldset_name" data-value="one-time-purchase-label">One-time purchase</span>
+              {% endif %}
+            </label>
+            <div class="th_subscription_spg_plan" style="display:none;">
+              <select class="th_subscription_spg_plan_select"><option value=""></option></select>
+            </div>
+          </div>
+        {% endunless %}
+        {% for th_subscription_spg in product.selling_plan_groups %}
+          {% if th_subscription_spg.app_id == '18d463fb7da4ca64c4511f4aa069dc20' %}
+            <div class="th_sp_wf_cls th_subscription_fieldset">
+              <label class="th_subscription_group_label">
+                <input type="radio" class="th_subscription_fieldset_radio" name="th-subscription-plan-selector-group" value="{{ th_subscription_spg.id }}" {% if product.requires_selling_plan %}{% if forloop.first %}checked{% endif %}{% endif %} />
+                <span class="th_subscription_fieldset_name">{{ th_subscription_spg.name }}</span>
+              </label>
+              <div class="th_subscription_spg_plan" {% if product.requires_selling_plan %}{% unless forloop.first %}style="display:none;"{% endunless %}{% else %}style="display:none;"{% endif %}>
+                <label class="th_subscription_spg_plan_title">{{ th_subscription_spg.options[0].name }}</label>
+                <select class="th_subscription_spg_plan_select">
+                  {% for th_subscription_plan in th_subscription_spg.selling_plans %}
+                    <option value="{{ th_subscription_plan.id }}" data-dicounttype="{{ th_subscription_plan.price_adjustments[0].value_type }}" data-dicountvalue="{{ th_subscription_plan.price_adjustments[0].value }}">
+                      {{ th_subscription_plan.options[0].value }}
+                    </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <script>
+    (function(){
+      var $thsb_product = {{ product | json }};
+      $thsb_product.thsb_page_type = {{ request.page_type | json }};
+      $thsb_product.thsb_selected_selling_plan = {{ product.selected_selling_plan | json }};
+      $thsb_product.thsb_selling_plans_by_id = (function(){
+        var $thsb_selling_array = {};
+        for(thsb_group of $thsb_product.selling_plan_groups){
+          for(thsb_plan of thsb_group.selling_plans){
+            $thsb_selling_array[thsb_plan.id] = JSON.parse(JSON.stringify(thsb_plan));
+            $thsb_selling_array[thsb_plan.id].selling_plan_group_id = thsb_group.id;
+          }
+        }
+        return $thsb_selling_array;
+      })();
+
+      $thsb_product.thsb_variants_by_id = (function(){
+        var $thsb_selling_array = {};
+        {% for thsb_variant in product.variants %}
+          {% assign thsb_variant_id = thsb_variant.id %}
+          $thsb_selling_array[{{ thsb_variant_id }}] = {{ thsb_variant | json }};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_price_formatted = {{ thsb_variant.price | money | json }};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_price_fwtz = {{ thsb_variant.price | money_without_trailing_zeros | json }};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_compare_price_formatted = {{ thsb_variant.compare_at_price | money | json }};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_compare_price_fwtz = {{ thsb_variant.compare_at_price | money_without_trailing_zeros | json }};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_agids = {};
+          $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi = {};
+          {% for thsb_vspa in thsb_variant.selling_plan_allocations %}
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_agids[{{ thsb_vspa.selling_plan_group_id | json }}] = true;
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}] = {};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_price = {{ thsb_vspa.price | json }};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_price_formatted = {{ thsb_vspa.price | money | json }};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_price_fwtz = {{ thsb_vspa.price | money_without_trailing_zeros | json }};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_compare_price = {{ thsb_vspa.compare_at_price | json }};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_compare_price_formatted = {{ thsb_vspa.compare_at_price | money | json }};
+            $thsb_selling_array[{{ thsb_variant_id }}].thsb_spabi[{{ thsb_vspa.selling_plan.id }}].thsb_compare_price_fwtz = {{ thsb_vspa.compare_at_price | money_without_trailing_zeros | json }};
+          {% endfor %}
+        {% endfor %}
+        return $thsb_selling_array;
+      })();
+      
+      window.th_subscription = window.th_subscription || {};
+      var $thsb_number = window.th_subscription.index || 0;
+      window.th_subscription.index = $thsb_number + 1;
+      {% if shop.metafields.nativeSubscription.thsb_subscription_layout == 1 %}
+      var $thsb_selector = document.querySelectorAll('div.th_subscription_radio_section');
+      {% else %}
+      var $thsb_selector = document.querySelectorAll('div.th_subscription_section');
+      {% endif %}
+      var $thsb_single_select = $thsb_selector[$thsb_selector.length - 1];
+      $thsb_single_select.id = 'thsb_product_subscription_id_' + $thsb_number.toString();
+      $thsb_single_select.dataset.product = JSON.stringify($thsb_product);
+    })();
+  </script>
+{% else%}
+  <script>
+  (function(){
+    var $thsb_product = {{ product | json }};
+    if(typeof $thsb_product.selling_plan_groups === 'undefined'){
+      console.log("Please use the Shopify Payments to enable the subscription.");
+    }
+  })();
+  </script>
+{% endif %}

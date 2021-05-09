@@ -1,0 +1,54 @@
+<div class="container mt-40">
+
+  <div class="grid grid-cols-12 mb-8">
+    <div class="col-span-4 xl:col-span-3">
+      <div class="text-caps mb-3">Delikatesse</div>
+      <ul class="flex text-sm">
+      {% for item in linklists.delikatesse.links %}
+        <li class="mr-4"><a href="{{ item.url }}" class="{% if item.current %}border-b{% endif %}">{{ item.title }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="col-span-4 xl:col-span-3">
+      <div class="text-caps mb-3">Produkter</div>
+      <ul class="flex text-sm">
+      {% for item in linklists.delikatesse.links %}
+        <li class="mr-4"><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="col-span-4 xl:col-span-3">
+      <div class="text-caps mb-3">Merkevarer</div>
+      <ul class="flex text-sm">
+      {% for item in linklists.delikatesse.links %}
+        <li class="mr-4"><a href="{{ item.url }}">{{ item.title }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12">
+
+    {% for item in collection.products %}
+    {% for tag in item.tags %}
+      {% if tag contains 'NO' %}{% assign no = tag | replace: 'NO-', '' %}{% endif %}
+    {% endfor %}
+    {% assign productPrice = item.price_min | money %}
+    {{ item.default_variant.title }}
+    <div class="col-span-4 xl:col-span-3">
+      <img src="{{ item.featured_image | img_url: '388x543', crop: 'center' }}" class="mb-4">
+      <div class="flex justify-between">
+        <div class="flex items-center">
+          {% if no %}<div class="no mr-3">{{ no }}</div>{% endif %}
+          <div class="text-base">{{ item.title }}</div>
+        </div>
+        <div class="flex items-baseline">
+            {% if item.variants.size > 1 %}<div class="text-sm mr-2">Fra</div>{% endif %}
+            <div class="text-base">{{ productPrice }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>

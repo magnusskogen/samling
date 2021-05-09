@@ -1,0 +1,107 @@
+{% assign productDescription = product.description | split:"<!-- split -->" %}
+{% assign utsolgt = false %}
+  {% assign forhand = false %}
+  {% for tag in product.tags %}
+    {% if tag contains 'NO' %}{% assign no = tag | replace: 'NO-', '' %}{% endif %}
+    {% if tag contains 'UTSOLGT' %}{% assign utsolgt = true %}{% endif %}
+    {% if tag contains 'FORHAND' %}{% assign forhand = true %}{% endif %}
+  {% endfor %}
+
+<div class="container w-2/3 lg:w-3/5">
+  <div class="text-md"><a href="/">Samling</a> 
+  <br>Delikatesse</div>  
+</div>
+
+<div class="container mt-40 ">
+  <div class="grid grid-cols-12 mb-8 lg:mb-32">
+    <div class="col-span-12 lg:col-span-3 text-base mob:-mb-4">
+        <div style="max-width: 230px">
+          <p>{% if no.size > 0 %}No {{ no }}<br>{% endif %}
+          {{ productDescription[1] | strip_html }}</p>
+        </div>
+    </div>
+    <div class="col-span-12 lg:col-span-9 text-xl">{{ product.title }}</div>
+  </div>
+
+  <div class="grid grid-cols-12 mb-32">
+    {% for image in product.images %}
+      <div class="col-span-12 lg:col-span-7">
+        <img src="{{ image.src | img_url: '1600x' }}" class="swiper-slide" />
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="grid grid-cols-12 mb-32">
+    <div class="col-span-12 lg:col-span-6 text-base">
+      {% if productDescription[0].size > 0 %}{{ productDescription[0] }}{% else %}{{ product.description }}{% endif %}
+    </div>
+  </div>
+
+  <form method="post" action="/cart/add" class="grid grid-cols-12 mb-32 items-center js-form-add-to-cart">
+    {% render 'th-subscription', product: product %}
+      {% if product.variants.size > 1 %}
+    <div class="col-span-4 lg:col-span-1 text-caps hidden">
+      Velg vekt
+    </div>
+    <div class="col-span-8 lg:col-span-11 flex flex-wrap">
+  
+      
+
+        {% for variant in product.variants %}
+          <div class="mr-3 mb-4">
+            <input data-price="{{ variant.price | money }}" type="radio" name="id" value="{{ variant.id }}" id="{{ variant.id }}" class="js-price-container hidden"{% if forloop.index == 2 %} checked{% endif %}>
+            <label for="{{ variant.id }}" class="no cursor-pointer">{{ variant.title }}</label>
+          </div>
+        {% endfor %}
+        
+      
+      
+    </div>
+    {% else %}
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+      {% endif %}
+    <div class="col-span-4 lg:col-span-1 text-caps hidden">
+      Pris
+    </div>
+    <div class="col-span-8 lg:col-span-11 text-base">
+      {% if product.variants.size > 1 %} 
+        {% for variant in product.variants limit:1 offset:1 %}
+          <span class="js-price">{{ variant.price | money }}</span>
+        {% endfor %}
+      {% else %}
+        {% for variant in product.variants limit:1 %}
+          <span class="js-price">{{ variant.price | money }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="col-span-12">
+
+      {% if forhand %}
+      <button class="button flex"><svg class="mr-2" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.75 15.0938H5.61871C5.46503 15.0938 5.31621 15.0398 5.19822 14.9413C5.08023 14.8429 5.00054 14.7061 4.97305 14.5549L2.78263 2.50761C2.75514 2.3564 2.67545 2.21964 2.55746 2.12116C2.43947 2.02269 2.29065 1.96875 2.13697 1.96875H0.65625" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.90625 18.375C6.81234 18.375 7.54688 17.6405 7.54688 16.7344C7.54688 15.8283 6.81234 15.0938 5.90625 15.0938C5.00016 15.0938 4.26562 15.8283 4.26562 16.7344C4.26562 17.6405 5.00016 18.375 5.90625 18.375Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.75 18.375C16.6561 18.375 17.3906 17.6405 17.3906 16.7344C17.3906 15.8283 16.6561 15.0938 15.75 15.0938C14.8439 15.0938 14.1094 15.8283 14.1094 16.7344C14.1094 17.6405 14.8439 18.375 15.75 18.375Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.28125 5.25H17.5887C17.6848 5.25 17.7797 5.27112 17.8668 5.31185C17.9539 5.35259 18.0309 5.41196 18.0925 5.48576C18.1541 5.55956 18.1987 5.64598 18.2232 5.73893C18.2477 5.83188 18.2515 5.92907 18.2343 6.02364L17.1605 11.9299C17.133 12.0811 17.0533 12.2179 16.9353 12.3163C16.8173 12.4148 16.6685 12.4688 16.5148 12.4688H4.59375" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>Legg i handlekurv</button>
+        <div class="text-caps mt-4">Neste dato for henting, levering og sending: 7. mai.</div>
+    {% elsif utsolgt %}<span class="button">Utsolgt</span>
+    {% else %}
+      <button class="button flex"><svg class="mr-2" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.75 15.0938H5.61871C5.46503 15.0938 5.31621 15.0398 5.19822 14.9413C5.08023 14.8429 5.00054 14.7061 4.97305 14.5549L2.78263 2.50761C2.75514 2.3564 2.67545 2.21964 2.55746 2.12116C2.43947 2.02269 2.29065 1.96875 2.13697 1.96875H0.65625" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.90625 18.375C6.81234 18.375 7.54688 17.6405 7.54688 16.7344C7.54688 15.8283 6.81234 15.0938 5.90625 15.0938C5.00016 15.0938 4.26562 15.8283 4.26562 16.7344C4.26562 17.6405 5.00016 18.375 5.90625 18.375Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M15.75 18.375C16.6561 18.375 17.3906 17.6405 17.3906 16.7344C17.3906 15.8283 16.6561 15.0938 15.75 15.0938C14.8439 15.0938 14.1094 15.8283 14.1094 16.7344C14.1094 17.6405 14.8439 18.375 15.75 18.375Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.28125 5.25H17.5887C17.6848 5.25 17.7797 5.27112 17.8668 5.31185C17.9539 5.35259 18.0309 5.41196 18.0925 5.48576C18.1541 5.55956 18.1987 5.64598 18.2232 5.73893C18.2477 5.83188 18.2515 5.92907 18.2343 6.02364L17.1605 11.9299C17.133 12.0811 17.0533 12.2179 16.9353 12.3163C16.8173 12.4148 16.6685 12.4688 16.5148 12.4688H4.59375" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>Legg i handlekurv</button>
+              <div class="text-caps mt-4">Neste dato for henting, levering og sending: 7. mai.</div>
+
+    {% endif %}
+
+      
+    </div>
+  </form>
+  
+
+</div>
+
+
+{% include 'footer' %}
