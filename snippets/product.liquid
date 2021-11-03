@@ -1,10 +1,31 @@
-<a href="{{ product.url }}" class="gsp-6 lg:gsp-4 no-underline">
-  <div class="product-image-hover">
-    {% for image in product.images limit: 2 %}
-    <img src="{{ image | img_url: '800x1200', crop: 'center' }}" />{% endfor %}
-  </div>
-  <div class="flex justify-between mt-2 lg:mt-4 text-sm">
-    <div>{{ product.title }}</div>
-    <div>{{ product.price | money }}</div>
-  </div>
-</a>
+{% assign no = '' %}
+  {% assign utsolgt = false %}
+  {% assign forhand = false %}
+  {% assign delikatesse = false %}
+  {% for tag in item.tags %}
+    {% if tag contains 'Delikatesse' %}{% assign delikatesse = true %}{% endif %}
+    {% if tag contains 'NO' %}{% assign no = tag | replace: 'NO-', '' %}{% endif %}
+    {% if tag contains 'UTSOLGT' %}{% assign utsolgt = true %}{% endif %}
+    {% if tag contains 'FORHAND' %}{% assign forhand = true %}{% endif %}
+  {% endfor %}
+  {% assign productPrice = item.price_min | money %}
+  {{ item.default_variant.title }}
+  <a href="{{ item.url }}" class="col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-3">
+    <div class="relative">
+      <img src="{{ item.featured_image | img_url: '774x1086', crop: 'center' }}" class="mb-4">
+      {% if no.size > 0 %}<div class="no absolute top-0 left-0 m-3 lg:hidden">{{ no }}</div>{% endif %}
+    </div>
+    <div class="lg:flex justify-between">
+      <div class="flex items-top">
+        {% if no.size > 0 %}<div class="mr-2 lg:mr-3 hidden lg:block"><div class="no">{{ no }}</div></div>{% endif %}
+        <div class="text-base">{{ item.title }}</div>
+      </div>
+      <div class="flex items-baseline pl-2">
+          {% if item.variants.size > 1 and delikatesse  %}<div class="text-sm mr-2">Fra</div>{% endif %}
+          <div class="text-base">{{ productPrice }}</div>
+      </div>
+    </div>
+    {% if forhand %}<div class="text-caps mt-2 opacity-75"></div>
+    {% elsif utsolgt %}<div class="text-caps mt-2 opacity-75">Midlertidig utsolgt</div>{% endif %}
+
+  </a>

@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "dependencies": {
     "browser-sync": "^2.26.12",
+    "gsap": "^3.8.0",
     "gulp": "^4.0.2",
     "gulp-error-handle": "^1.0.1",
     "gulp-mode": "^1.0.2",

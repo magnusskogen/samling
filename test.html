@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+  class="no-js {{ bgColor }}{% if bodyClass %} {{ bodyClass }}{% endif %}"
+  lang="{{ shop.locale }}"
+>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      {{ page_title }}{% if current_tags %} &ndash; tagged "{{
+        current_tags | join: ", "
+      }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{%
+      endif %}{% unless page_title contains 'Samling' %}{% endunless %}
+    </title>
+
+
+
+    <link href="assets/styles.css" rel="stylesheet" type="text/css" media="all" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  </head>
+
+  <body data-barba="wrapper" class="{{ invert }} w-screen relative overflow-x-hidden">
+
+
+
+    <div data-barba="container" class="relative w-screen overflow-x-hidden">
+      <div class="main-container flex flex-col">
+        
+        <div class="border-t border-current">
+            <a href="#" class="flex js-accordion-link justify-between p-2">
+                Oster
+            </a>
+            <div>
+            <div class="js-accordion-content relative overflow-hidden">
+                <div class="border-t border-grey border-opacity-25">
+                    <a href="#" class="flex js-inner-link justify-between p-2">Bergkäse</a>
+                    <div class="js-inner-content relative overflow-hidden hidden">
+                        <img src="{{ 'berg.png' | asset_url }}">
+                        <div class="p-4">Dette er en smaksbombe som er ukjent for de fleste — og kanskje vår favoritt over alle sveitsiske fastoster! Bergkäse betyr "ost fra fjellet", som er er betegnelsen på en rekke type ost som er produsert i alpene. Osten er laget av kumelk hos bønder med gårder på over 900 moh. og er derfor kvalitetsstemplet og “fjell-sertifisert”. 
+            
+            En konge på ostefatet, men også brilliant til matlaging både i sauser, gratenger og til all slags kjøttretter.</div>
+        
+                    </div>
+                </div>
+        
+                <div class="border-t border-grey border-opacity-25">
+                    <a href="#" class="flex js-inner-link justify-between p-2">Bergkäses</a>
+                    <div class="js-inner-content relative overflow-hidden hidden">
+                    <img src="{{ 'berg.png' | asset_url }}">
+                    <div class="p-4">Dette er en smaksbombe som er ukjent for de fleste — og kanskje vår favoritt over alle sveitsiske fastoster! Bergkäse betyr "ost fra fjellet", som er er betegnelsen på en rekke type ost som er produsert i alpene. Osten er laget av kumelk hos bønder med gårder på over 900 moh. og er derfor kvalitetsstemplet og “fjell-sertifisert”. 
+        
+        En konge på ostefatet, men også brilliant til matlaging både i sauser, gratenger og til all slags kjøttretter.</div>
+        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="border-t border-current">
+            <a href="#" class="flex js-accordion-link justify-between p-2">
+                Oster
+            </a>
+            <div class="js-accordion-content relative overflow-hidden">
+                <div class="border-t border-grey border-opacity-25">
+                    <a href="#" class="flex js-inner-link justify-between p-2">Bergkäse</a>
+                    <div class="js-inner-content relative overflow-hidden hidden">
+                    <img src="{{ 'berg.png' | asset_url }}">
+                    <div class="p-4">Dette er en smaksbombe som er ukjent for de fleste — og kanskje vår favoritt over alle sveitsiske fastoster! Bergkäse betyr "ost fra fjellet", som er er betegnelsen på en rekke type ost som er produsert i alpene. Osten er laget av kumelk hos bønder med gårder på over 900 moh. og er derfor kvalitetsstemplet og “fjell-sertifisert”. 
+        
+        En konge på ostefatet, men også brilliant til matlaging både i sauser, gratenger og til all slags kjøttretter.</div>
+        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        
+      </div>
+
+      
+    </div>        <script type="text/javascript" src="assets/bundle2.js"></script>
+
+
+    <script type="text/javascript" src="{{ 'bundle.js' | asset_url }}"></script>
+</html>
+
+

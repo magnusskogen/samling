@@ -1,68 +1,66 @@
-<div class="container  lg:w-4/6">
-  <div class="text-md"><a href="/">Samling</a> <!--er vårt levende arkiv av våre favoritter. Vi starter med en minidelikatesse, og kommer til å legge til flere og andre typer produkter i fremtiden.<br><br> Velkommen hit, takk for at du kom innom! <br>Hilsen <a href="https://bakklandetblomster.no">Julie</a> og <a href="https://skogen.io">Magnus</a>--> 
-  <br>{{ subtitle }}&nbsp;</div>  
-</div>
 
-<div class="container mt-40 ">
-
-<div class="grid grid-cols-12 mb-8 hidden">
-  <div class="hidden lg:block col-span-4 xl:col-span-3">
-    <div class="text-caps mb-3">Delikatesse</div>
-    <ul class="flex text-sm">
-    {% for item in linklists.delikatesse.links %}
-      <li class="mr-4"><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-    </ul>
-  </div>
-  <div class="hidden lg:block col-span-4 xl:col-span-3">
-    <div class="text-caps mb-3">Produkter</div>
-    <ul class="flex text-sm">
-    {% for item in linklists.delikatesse.links %}
-      <li class="mr-4"><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-    </ul>
-  </div>
-  <div class="hidden lg:block col-span-4 xl:col-span-3">
-    <div class="text-caps mb-3">Merkevarer</div>
-    <ul class="flex text-sm">
-    {% for item in linklists.delikatesse.links %}
-      <li class="mr-4"><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% endfor %}
-    </ul>
-  </div>
-</div>
-
-<div class="grid grid-cols-12 mb-40">
-
-  {% for item in collections['all'].products %}
-  {% assign no = '' %}
-  {% assign utsolgt = false %}
-  {% assign forhand = false %}
-  {% for tag in item.tags %}
-    {% if tag contains 'NO' %}{% assign no = tag | replace: 'NO-', '' %}{% endif %}
-    {% if tag contains 'UTSOLGT' %}{% assign utsolgt = true %}{% endif %}
-    {% if tag contains 'FORHAND' %}{% assign forhand = true %}{% endif %}
-  {% endfor %}
-  {% assign productPrice = item.price_min | money %}
-  {{ item.default_variant.title }}
-  <a href="{{ item.url }}" class="col-span-6 lg:col-span-4 xl:col-span-3">
-    <img src="{{ item.featured_image | img_url: '774x1086', crop: 'center' }}" class="mb-4">
-    <div class="lg:flex justify-between">
-      <div class="flex items-center">
-        {% if no.size > 0 %}<div class="no mr-2 lg:mr-3">{{ no }}</div>{% endif %}
-        <div class="text-base">{{ item.title }}</div>
-      </div>
-      <div class="flex items-baseline">
-          {% if item.variants.size > 1 %}<div class="text-sm mr-2">Fra</div>{% endif %}
-          <div class="text-base">{{ productPrice }}</div>
-      </div>
+    <div class="border-t border-current bg-white">
+        <a href="#" class="flex js-accordion-link justify-between px-4 h-16 items-center w-full">
+            <div class="strong">oster</div>
+            <svg class="caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8L15 1" stroke="#072F19" stroke-width="2"/>
+            </svg>
+        </a>
+        <div class="js-accordion-content relative overflow-hidden">
+            {% for product in collections['oster'].products %}
+              {% include 'productloop' %}
+            {% endfor %}
+        </div>
     </div>
-    {% if forhand %}<div class="text-caps mt-2 opacity-75"></div>
-    {% elsif utsolgt %}<div class="text-caps mt-2 opacity-75">Utsolgt</div>{% endif %}
-
-  </a>
-  {% endfor %}
-
-</div>
-</div>
-{% include 'footer' %}
+    <div class="border-t border-current bg-white">
+        <a href="#" class="flex js-accordion-link justify-between px-4 h-16 items-center w-full">
+            <div class="strong">kjøtt</div>
+            <svg class="caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8L15 1" stroke="#072F19" stroke-width="2"/>
+            </svg>
+        </a>
+        <div class="js-accordion-content relative overflow-hidden">
+            {% for product in collections['kjott'].products %}
+              {% include 'productloop' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="border-t border-current bg-white">
+        <a href="#" class="flex js-accordion-link justify-between px-4 h-16 items-center w-full">
+            <div class="strong">tørrvarer</div>
+            <svg class="caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8L15 1" stroke="#072F19" stroke-width="2"/>
+            </svg>
+        </a>
+        <div class="js-accordion-content relative overflow-hidden">
+            {% for product in collections['torrvarer'].products %}
+              {% include 'productloop' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="border-t border-current bg-white">
+        <a href="#" class="flex js-accordion-link justify-between px-4 h-16 items-center w-full">
+            <div class="strong">tilbehør</div>
+            <svg class="caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8L15 1" stroke="#072F19" stroke-width="2"/>
+            </svg>
+        </a>
+        <div class="js-accordion-content relative overflow-hidden">
+            {% for product in collections['tilbehor'].products %}
+              {% include 'productloop' %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="border-t border-b border-current" style="background: #DFF9E3">
+        <a href="#" class="flex js-accordion-link justify-between px-4 h-16 items-center w-full">
+            <div class="strong">pakker</div>
+            <svg class="caret" width="16" height="10" viewBox="0 0 16 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L8 8L15 1" stroke="#072F19" stroke-width="2"/>
+            </svg>
+        </a>
+        <div class="js-accordion-content relative overflow-hidden">
+          {% for product in collections['pakker'].products %}
+              {% include 'productloop' %}
+            {% endfor %}
+          </div>
+    </div>

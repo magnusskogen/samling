@@ -1,0 +1,41 @@
+<div class="border-t border-grey border-opacity-25">
+                <div class="flex justify-between px-4 items-center">
+                    <a href="#" class="flex flex-wrap js-inner-link justify-between h-16 items-center">
+                        <div>
+                        <span class="underline">{{ product.title }}</span><br>
+                        {% for tag in product.tags %}{% if tag contains 'hg-' %}<span class="text-xs">{{ tag | replace: 'hg-', '' }},- per hg</span>{% endif %}{% endfor %}
+                        </div>
+                    </a>
+                    <div>
+                        <form action="/cart/add" method="post" class="js-form-add-to-cart flex text-sm">
+                            <input type="hidden" name="quantity" class="js-real-quantity" value="1">
+                            {% for variant in product.variants %}
+                                <input class="js-add-to-cart absolute" type="radio" name="id" id="{{ variant.id }}" value="{{ variant.id }}" style="left: -100vw">
+                                <label for="{{ variant.id }}" class="text-sm items-center ml-1 flex rounded-full border p-2  px-2 label-{{ variant.id }}">
+                                    <svg class="js-icon js-cart" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.243 3.57827L11.5781 7.2348C11.5232 7.53727 11.3639 7.81086 11.1279 8.00783C10.8919 8.2048 10.5942 8.31263 10.2868 8.3125H3.94468L4.18333 9.625H10.0625C10.3413 9.62487 10.6129 9.71347 10.838 9.87798C11.0631 10.0425 11.2299 10.2744 11.3145 10.54C11.399 10.8057 11.3968 11.0914 11.3081 11.3557C11.2195 11.62 11.049 11.8493 10.8214 12.0103C10.5937 12.1712 10.3208 12.2556 10.042 12.2511C9.76326 12.2466 9.49317 12.1535 9.27084 11.9853C9.04851 11.8171 8.88549 11.5825 8.80538 11.3155C8.72527 11.0484 8.73223 10.7628 8.82525 10.5H5.61225C5.68934 10.7172 5.70787 10.9509 5.66597 11.1776C5.62407 11.4043 5.52323 11.6159 5.37358 11.7912C5.22392 11.9665 5.03075 12.0994 4.81347 12.1763C4.59619 12.2533 4.36248 12.2717 4.13584 12.2297C3.9092 12.1876 3.69762 12.0867 3.52238 11.9369C3.34714 11.7872 3.21443 11.5939 3.13759 11.3766C3.06074 11.1593 3.04248 10.9256 3.08464 10.6989C3.12679 10.4723 3.22788 10.2608 3.37773 10.0857L1.86215 1.75H0.875C0.758968 1.75 0.647688 1.70391 0.565641 1.62186C0.483594 1.53981 0.4375 1.42853 0.4375 1.3125C0.4375 1.19647 0.483594 1.08519 0.565641 1.00314C0.647688 0.921094 0.758968 0.875 0.875 0.875H1.86215C2.0671 0.874909 2.26556 0.946797 2.42291 1.07812C2.58025 1.20943 2.68648 1.39184 2.72305 1.59349L2.99014 3.0625H11.8125C11.8766 3.06251 11.9399 3.07659 11.9979 3.10375C12.056 3.13091 12.1073 3.17049 12.1484 3.21969C12.1894 3.26888 12.2192 3.3265 12.2355 3.38846C12.2519 3.45042 12.2544 3.51522 12.243 3.57827V3.57827Z" fill="currentColor"/></svg>
+                                    <svg class="js-icon js-spin hidden" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 1.75V3.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.7123 3.28766L9.47485 4.5251" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12.25 7H10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10.7123 10.7123L9.47485 9.47485" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7 12.25V10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.28766 10.7123L4.5251 9.47485" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M1.75 7H3.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M3.28766 3.28766L4.5251 4.5251" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+
+                                    <svg class="js-icon js-ok hidden" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1.3125C5.87512 1.3125 4.7755 1.64607 3.8402 2.27102C2.90489 2.89597 2.17591 3.78423 1.74544 4.82349C1.31496 5.86274 1.20233 7.00631 1.42179 8.10958C1.64124 9.21284 2.18292 10.2263 2.97833 11.0217C3.77374 11.8171 4.78716 12.3588 5.89043 12.5782C6.99369 12.7977 8.13726 12.685 9.17651 12.2546C10.2158 11.8241 11.104 11.0951 11.729 10.1598C12.3539 9.2245 12.6875 8.12488 12.6875 7C12.6858 5.49212 12.086 4.04649 11.0197 2.98026C9.95351 1.91402 8.50789 1.31424 7 1.3125V1.3125ZM9.70874 6.00409L6.50012 9.06659C6.41854 9.14421 6.31024 9.1875 6.19763 9.1875C6.08503 9.1875 5.97673 9.14421 5.89514 9.06659L4.29126 7.53534C4.20747 7.45507 4.15896 7.34483 4.15639 7.22883C4.15382 7.11282 4.19741 7.00054 4.27756 6.91664C4.35772 6.83275 4.46791 6.7841 4.58391 6.78138C4.69991 6.77867 4.81225 6.82211 4.89624 6.90216L6.19763 8.14502L9.10376 5.37091C9.18776 5.29086 9.3001 5.24742 9.4161 5.25013C9.5321 5.25285 9.64228 5.3015 9.72244 5.38539C9.8026 5.46929 9.84618 5.58157 9.84361 5.69758C9.84104 5.81358 9.79254 5.92382 9.70874 6.00409V6.00409Z" fill="currentColor"/>
+                                    </svg>
+
+                                    <span class="ml-1">{% if product.has_only_default_variant %}{{ variant.price | money }}{% else %}{{ variant.title }}{% endif %}</span>
+                                </label>
+                            {% endfor %}
+                            <button></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="js-inner-content relative overflow-hidden hidden">
+                    <img src="{{ product.featured_image | img_url: '1200x750', crop: 'center' }}" width="1200" height="750">
+                    <div class="p-4">{{ product.description }}</div>
+                </div>
+            </div>
